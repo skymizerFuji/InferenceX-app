@@ -1,6 +1,7 @@
 import type { ExclusionConflictPolicy, ExclusionSpec } from './exclusion';
 
 export enum Model {
+  Llama3_1_8B = 'Llama-3.1-8B',
   Llama3_3_70B = 'Llama-3.3-70B-Instruct-FP8',
   Llama3_1_70B = 'Llama-3.1-70B-Instruct-FP8-KV',
   DeepSeek_R1 = 'DeepSeek-R1-0528',
@@ -134,6 +135,11 @@ const GUARDED_ENGINE_FAMILIES = ['vllm', 'sglang'] as const;
 // already part of the canonical name (Llama 3.3 70B, gpt-oss 120B) so no
 // duplication needed.
 const MODEL_CONFIG: Record<Model, ModelConfig> = {
+  [Model.Llama3_1_8B]: {
+    label: 'Llama 3.1 8B',
+    prefix: 'llama31-8b',
+    category: 'experimental',
+  },
   [Model.DeepSeek_V4_Pro]: {
     label: 'DeepSeek V4 Pro 0813 1.6T',
     prefix: 'dsv4',

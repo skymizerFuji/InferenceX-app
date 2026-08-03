@@ -96,6 +96,7 @@ describe('hwToGpuKey', () => {
   it('handles bare GPU keys', () => {
     expect(hwToGpuKey('h100')).toBe('h100');
     expect(hwToGpuKey('mi300x')).toBe('mi300x');
+    expect(hwToGpuKey('rtx5090')).toBe('rtx5090');
   });
 
   it('is case-insensitive', () => {
@@ -188,11 +189,21 @@ describe('resolveModelKey', () => {
   });
 
   it('resolves models from HuggingFace paths via MODEL_TO_KEY', () => {
+    expect(resolveModelKey({ model: 'meta-llama/Llama-3.1-8B' })).toBe('llama31-8b');
     expect(resolveModelKey({ model: 'Qwen/Qwen3.5-397B-A17B' })).toBe('qwen3.5');
     expect(resolveModelKey({ model: 'moonshotai/Kimi-K2.5' })).toBe('kimik2.5');
     expect(resolveModelKey({ model: 'MiniMaxAI/MiniMax-M2.5' })).toBe('minimaxm2.5');
     expect(resolveModelKey({ model: 'zai-org/GLM-5-FP8' })).toBe('glm5');
     expect(resolveModelKey({ model: 'zai-org/GLM-5.2-FP8' })).toBe('glm5.2');
+  });
+
+  it('resolves the Llama 3.1 8B identifiers emitted by run 30755775646', () => {
+    expect(
+      resolveModelKey({
+        infmax_model_prefix: 'llama31-8b',
+        model: 'meta-llama/Llama-3.1-8B',
+      }),
+    ).toBe('llama31-8b');
   });
 
   it('resolves Kimi-K3 identifiers to the kimik3 key, not the K2 buckets', () => {

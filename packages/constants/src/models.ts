@@ -9,6 +9,7 @@
 export const DB_MODEL_TO_DISPLAY: Record<string, string> = {
   dsr1: 'DeepSeek-R1-0528',
   gptoss120b: 'gpt-oss-120b',
+  'llama31-8b': 'Llama-3.1-8B',
   llama70b: 'Llama-3.3-70B-Instruct-FP8',
   'qwen3.5': 'Qwen-3.5-397B-A17B',
   // Qwen4-architecture preview, not a Qwen3.5 point release (GatedDeltaNet plus

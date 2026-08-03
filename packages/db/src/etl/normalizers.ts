@@ -91,6 +91,8 @@ export const MODEL_TO_KEY: Record<string, string> = {
   'nvidia/Llama-3.3-70B-Instruct-FP4': 'llama70b',
   'amd/Llama-3.3-70B-Instruct-FP8-KV': 'llama70b',
   'amd/Llama-3.3-70B-Instruct-MXFP4-Preview': 'llama70b',
+  // Llama-3.1-8B
+  'meta-llama/Llama-3.1-8B': 'llama31-8b',
   // Qwen3.5
   'Qwen/Qwen3.5-397B-A17B': 'qwen3.5',
   'Qwen/Qwen3.5-397B-A17B-FP8': 'qwen3.5',
