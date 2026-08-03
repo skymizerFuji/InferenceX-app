@@ -164,11 +164,26 @@ export const HW_REGISTRY: Record<string, HwEntry> = {
   // reference-card TGP. All-in power and hourly cost tiers are unknown for
   // this user-operated runner, so retain the registry's explicit placeholder.
   rtx5090: {
-    vendor: 'NVIDIA',
+    // vendor: 'NVIDIA',
+    vendor: 'Skymizer', // For testing purposes, pretend this is a Skymizer runner to see how the color zones work.
     arch: 'Blackwell',
     label: 'RTX 5090',
     sort: 10,
     tdp: 575,
+    power: 9.99,
+    costh: 9.99,
+    costn: 9.99,
+    costr: 9.99,
+  },
+  // Skymizer HTX301. Detailed architecture, board power, facility power, and
+  // hourly pricing have not been provided yet, so use the registry's explicit
+  // placeholders until they can be replaced with verified specifications.
+  htx301: {
+    vendor: 'Skymizer',
+    arch: 'Unknown',
+    label: 'HTX301',
+    sort: 11,
+    tdp: 999,
     power: 9.99,
     costh: 9.99,
     costn: 9.99,
@@ -211,6 +226,7 @@ export const VENDOR_OKLCH_ZONES: Record<
   amd: { start: 12, end: 42, chroma: { light: 0.18, dark: 0.22 } },
   nvidia: { start: 120, end: 170, chroma: { light: 0.15, dark: 0.15 } },
   teacup: { start: 235, end: 270, chroma: { light: 0.14, dark: 0.16 } },
+  skymizer: { start: 195, end: 245, chroma: { light: 0.16, dark: 0.18 } },
   unknown: { start: 275, end: 330, chroma: { light: 0.14, dark: 0.16 } },
 };
 
@@ -238,5 +254,6 @@ export const VENDOR_HSL_ZONES: Record<string, { start: number; span: number }[]>
     { start: 300, span: 60 },
     { start: 0, span: 60 },
   ],
+  skymizer: [{ start: 195, span: 50 }],
   unknown: [{ start: 240, span: 60 }],
 };

@@ -19,6 +19,7 @@ describe('getVendor', () => {
     expect(getVendor('h100_vllm')).toBe('nvidia');
     expect(getVendor('mi300x_sglang')).toBe('amd');
     expect(getVendor('jalapeno_teacup')).toBe('teacup');
+    expect(getVendor('htx301_vllm')).toBe('skymizer');
   });
 
   it('classifies keys that lead with a literal vendor token', () => {
@@ -26,6 +27,7 @@ describe('getVendor', () => {
     // registered GPU key (their SKUs, e.g. "h200-dgxc", are not registry keys).
     expect(getVendor('nvidia_h200-dgxc_normal_ep8')).toBe('nvidia');
     expect(getVendor('amd_mi355x-oam_normal_ep8')).toBe('amd');
+    expect(getVendor('skymizer_htx301_normal_ep8')).toBe('skymizer');
   });
 
   it('falls back to unknown for unclassifiable keys', () => {

@@ -35,6 +35,7 @@ const BANNED_HUE_TEST: Record<Vendor, ((hue: number) => boolean) | null> = {
   nvidia: (hue) => hue >= 320 || hue <= 40, // red/rose/pink zone
   amd: (hue) => hue >= 120 && hue <= 195, // green zone
   teacup: (hue) => hue < 170 || hue > 300, // keep the blue/cyan zone
+  skymizer: null,
   unknown: null,
 };
 
@@ -49,6 +50,7 @@ const PREFERRED_ZONE: Record<
   nvidia: { hmin: 100, hmax: 195 }, // greens/teals
   amd: { hmin: 20, hmax: 50, cmin: 70, lmin: 50 }, // vivid reds/oranges
   teacup: { hmin: 190, hmax: 280 }, // cyans/blues
+  skymizer: { hmin: 220, hmax: 280 }, // blues
   unknown: null,
 };
 

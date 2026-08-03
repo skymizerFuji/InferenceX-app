@@ -97,11 +97,13 @@ describe('hwToGpuKey', () => {
     expect(hwToGpuKey('h100')).toBe('h100');
     expect(hwToGpuKey('mi300x')).toBe('mi300x');
     expect(hwToGpuKey('rtx5090')).toBe('rtx5090');
+    expect(hwToGpuKey('htx301')).toBe('htx301');
   });
 
   it('is case-insensitive', () => {
     expect(hwToGpuKey('H200-NV')).toBe('h200');
     expect(hwToGpuKey('MI355X-AMD')).toBe('mi355x');
+    expect(hwToGpuKey('HTX301-SKYMIZER')).toBe('htx301');
   });
 
   it('returns null for unknown hardware', () => {

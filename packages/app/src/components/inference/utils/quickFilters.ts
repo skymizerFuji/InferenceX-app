@@ -12,7 +12,7 @@ import { frameworkFamily } from '@/lib/framework-family';
 export type { AvailableQuickFilters, DeploymentMode, QuickFilters, SpecMode };
 
 /** Vendor display order for the quick-filter pills. */
-const VENDOR_ORDER = ['NVIDIA', 'AMD'];
+const VENDOR_ORDER = ['NVIDIA', 'AMD', 'Skymizer'];
 
 /**
  * Quick filters let users narrow the chart to any combination of GPU vendor,

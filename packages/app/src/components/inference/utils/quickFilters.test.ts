@@ -25,6 +25,7 @@ describe('pointVendor', () => {
   it('resolves vendor from the base GPU in the hardware key', () => {
     expect(pointVendor('h100_vllm_mtp')).toBe('NVIDIA');
     expect(pointVendor('mi300x_sglang')).toBe('AMD');
+    expect(pointVendor('htx301_vllm')).toBe('Skymizer');
   });
 
   it('returns undefined for an unknown GPU base', () => {
@@ -75,6 +76,14 @@ describe('computeAvailableQuickFilters', () => {
       deployment: ['single-node', 'multi-node', 'disagg'],
       spec: ['mtp', 'stp'],
     });
+  });
+
+  it('surfaces Skymizer when HTX301 benchmark data is available', () => {
+    const points = [
+      point({ hwKey: 'htx301_vllm', framework: 'vllm', disagg: false, spec_decoding: 'none' }),
+    ];
+
+    expect(computeAvailableQuickFilters(points).vendors).toEqual(['Skymizer']);
   });
 
   it('omits categories/values with no data', () => {
