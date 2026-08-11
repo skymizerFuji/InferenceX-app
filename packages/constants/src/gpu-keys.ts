@@ -164,8 +164,7 @@ export const HW_REGISTRY: Record<string, HwEntry> = {
   // reference-card TGP. All-in power and hourly cost tiers are unknown for
   // this user-operated runner, so retain the registry's explicit placeholder.
   rtx5090: {
-    // vendor: 'NVIDIA',
-    vendor: 'Skymizer', // For testing purposes, pretend this is a Skymizer runner to see how the color zones work.
+    vendor: 'NVIDIA',
     arch: 'Blackwell',
     label: 'RTX 5090',
     sort: 10,
