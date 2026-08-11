@@ -269,7 +269,11 @@ async function main(): Promise<void> {
   const tracker = createSkipTracker();
   const configCache = createConfigCache(sql);
   const { getOrCreateConfig, preloadConfigs } = configCache;
-  const { fetchGithubRun, getOrCreateWorkflowRun } = createWorkflowRunServices(sql, GITHUB_TOKEN);
+  const { fetchGithubRun, getOrCreateWorkflowRun } = createWorkflowRunServices(
+    sql,
+    GITHUB_TOKEN,
+    REPO,
+  );
 
   const runId = parseInt(runIdStr, 10);
   const ghInfo = await fetchGithubRun(runId);

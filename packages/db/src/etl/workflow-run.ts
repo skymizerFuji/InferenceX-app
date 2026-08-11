@@ -1,6 +1,6 @@
 /**
  * Workflow run cache + GitHub API enrichment.
- * `createWorkflowRunServices(sql, githubToken?)` returns `fetchGithubRun` and
+ * `createWorkflowRunServices(sql, githubToken?, preferredRepo?)` returns `fetchGithubRun` and
  * `getOrCreateWorkflowRun`.
  */
 
@@ -40,15 +40,20 @@ export interface GithubRunInfo {
  * @param sql - Active `postgres` connection used for upserts.
  * @param githubToken - Optional GitHub PAT used to enrich runs via the API.
  *   When omitted, `fetchGithubRun` always returns `null`.
+ * @param preferredRepo - Source repository supplied by the ingest workflow.
+ *   It is tried before the canonical/legacy repositories so forks can enrich
+ *   their workflow runs without changing the shared repository registry.
  * @returns An object with `fetchGithubRun` and `getOrCreateWorkflowRun`.
  */
-export function createWorkflowRunServices(sql: Sql, githubToken?: string) {
+export function createWorkflowRunServices(sql: Sql, githubToken?: string, preferredRepo?: string) {
   const workflowRunCache = new Map<string, number>();
   const githubRunCache = new Map<number, GithubRunInfo | null>();
+  const githubRepos = [...new Set([preferredRepo, ...GITHUB_REPOS].filter(Boolean))] as string[];
 
   /**
    * Fetch metadata for a GitHub Actions run from the API.
-   * Tries each repo in `GITHUB_REPOS` in order, stopping at the first 200 response.
+   * Tries the preferred source repository, then each repo in `GITHUB_REPOS`,
+   * stopping at the first 200 response.
    * Results (including `null` for 404s or network failures) are cached in memory.
    *
    * @param runId - Numeric GitHub Actions run ID.
@@ -64,7 +69,7 @@ export function createWorkflowRunServices(sql: Sql, githubToken?: string) {
 
     try {
       let resp: Response | null = null;
-      for (const repo of GITHUB_REPOS) {
+      for (const repo of githubRepos) {
         resp = await fetch(`${GITHUB_API_BASE}/repos/${repo}/actions/runs/${runId}`, {
           headers: {
             Authorization: `Bearer ${githubToken}`,
