@@ -20,12 +20,11 @@ jobs:
     permissions:
       contents: read
     steps:
-      - name: Wait for source run to finish
-        if: >-
-          github.event.client_payload.source-run-id == '' ||
-          github.event.client_payload.source-run-id ==
-          github.event.client_payload.merge-run-id
-        run: sleep 300
+      # - name: Wait for source run to finish
+      #   if: >-
+      #     github.event.client_payload.source-run-id == '' ||
+      #     github.event.client_payload.source-run-id == github.event.client_payload.merge-run-id
+      #   run: sleep 300
 
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
