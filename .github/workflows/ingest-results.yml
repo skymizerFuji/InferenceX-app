@@ -89,13 +89,6 @@ jobs:
           DATABASE_WRITE_URL: ${{ secrets.DATABASE_WRITE_URL }}
         run: bun run admin:db:verify
 
-      - name: Invalidate Vercel cache
-        env:
-          VERCEL_INVALIDATE_SECRET: ${{ secrets.VERCEL_INVALIDATE_SECRET }}
-        run: |
-          curl -sSf -X POST "https://inferencex.semianalysis.com/api/v1/invalidate" \
-            -H "Authorization: Bearer $VERCEL_INVALIDATE_SECRET" || true
-
       - name: Check for unmapped entities
         if: always()
         id: unmapped
