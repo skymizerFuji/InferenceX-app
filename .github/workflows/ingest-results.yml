@@ -60,7 +60,7 @@ jobs:
           MERGE_RUN_ID: ${{ github.event.client_payload.merge-run-id ||
             github.event.client_payload.run-id }}
           ARTIFACTS_PATH: ${{ github.workspace }}/artifacts
-          INGEST_REPO: SemiAnalysisAI/InferenceX
+          INGEST_REPO: skymizerFuji/InferenceX
         run: bun run admin:db:prepare:ci
 
       - name: Run migrations
@@ -75,7 +75,7 @@ jobs:
           INGEST_RUN_ID: ${{ steps.artifacts.outputs.merge-run-id }}
           INGEST_RUN_ATTEMPT: ${{ steps.artifacts.outputs.merge-run-attempt }}
           INGEST_ARTIFACTS_PATH: ${{ github.workspace }}/artifacts
-          INGEST_REPO: SemiAnalysisAI/InferenceX
+          INGEST_REPO: skymizerFuji/InferenceX
           UNMAPPED_ENTITIES_OUTPUT: ${{ github.workspace }}/unmapped-entities.json
         run: bun run admin:db:ingest:ci --no-ssl
 
