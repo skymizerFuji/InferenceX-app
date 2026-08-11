@@ -15,7 +15,8 @@ jobs:
   ingest:
     name: Ingest benchmark results
     timeout-minutes: 30
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64, dl04, db-ingest]
     permissions:
       contents: read
     steps:
