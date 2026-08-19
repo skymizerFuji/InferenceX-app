@@ -192,6 +192,11 @@ describe('resolveModelKey', () => {
 
   it('resolves models from HuggingFace paths via MODEL_TO_KEY', () => {
     expect(resolveModelKey({ model: 'meta-llama/Llama-3.1-8B' })).toBe('llama31-8b');
+    expect(resolveModelKey({ model: 'Qwen/Qwen3-0.6B' })).toBe('qwen3-0.6b');
+    expect(resolveModelKey({ model: 'meta-llama/Llama-3.2-1B-Instruct' })).toBe('llama32-1b');
+    expect(resolveModelKey({ model: 'Qwen/Qwen2.5-1.5B-Instruct' })).toBe('qwen25-1.5b');
+    expect(resolveModelKey({ model: 'google/gemma-2b-it' })).toBe('gemma2b');
+    expect(resolveModelKey({ model: 'microsoft/Phi-3-mini-4k-instruct' })).toBe('phi3mini');
     expect(resolveModelKey({ model: 'Qwen/Qwen3.5-397B-A17B' })).toBe('qwen3.5');
     expect(resolveModelKey({ model: 'moonshotai/Kimi-K2.5' })).toBe('kimik2.5');
     expect(resolveModelKey({ model: 'MiniMaxAI/MiniMax-M2.5' })).toBe('minimaxm2.5');
@@ -206,6 +211,20 @@ describe('resolveModelKey', () => {
         model: 'meta-llama/Llama-3.1-8B',
       }),
     ).toBe('llama31-8b');
+  });
+
+  it('resolves the small-model case identifiers', () => {
+    const cases = [
+      ['qwen3-0.6b', 'Qwen/Qwen3-0.6B'],
+      ['llama32-1b', 'meta-llama/Llama-3.2-1B-Instruct'],
+      ['qwen25-1.5b', 'Qwen/Qwen2.5-1.5B-Instruct'],
+      ['gemma2b', 'google/gemma-2b-it'],
+      ['phi3mini', 'microsoft/Phi-3-mini-4k-instruct'],
+    ] as const;
+
+    for (const [prefix, model] of cases) {
+      expect(resolveModelKey({ infmax_model_prefix: prefix, model })).toBe(prefix);
+    }
   });
 
   it('resolves Kimi-K3 identifiers to the kimik3 key, not the K2 buckets', () => {

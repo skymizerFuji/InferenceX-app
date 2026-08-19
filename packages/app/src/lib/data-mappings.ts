@@ -1,6 +1,11 @@
 import type { ExclusionConflictPolicy, ExclusionSpec } from './exclusion';
 
 export enum Model {
+  Qwen3_0_6B = 'Qwen3-0.6B',
+  Llama3_2_1B_Instruct = 'Llama-3.2-1B-Instruct',
+  Qwen2_5_1_5B_Instruct = 'Qwen2.5-1.5B-Instruct',
+  Gemma_2B_IT = 'gemma-2b-it',
+  Phi3_Mini_4K_Instruct = 'Phi-3-mini-4k-instruct',
   Llama3_1_8B = 'Llama-3.1-8B',
   Llama3_3_70B = 'Llama-3.3-70B-Instruct-FP8',
   Llama3_1_70B = 'Llama-3.1-70B-Instruct-FP8-KV',
@@ -135,6 +140,31 @@ const GUARDED_ENGINE_FAMILIES = ['vllm', 'sglang'] as const;
 // already part of the canonical name (Llama 3.3 70B, gpt-oss 120B) so no
 // duplication needed.
 const MODEL_CONFIG: Record<Model, ModelConfig> = {
+  [Model.Qwen3_0_6B]: {
+    label: 'Qwen3 0.6B',
+    prefix: 'qwen3-0.6b',
+    category: 'experimental',
+  },
+  [Model.Llama3_2_1B_Instruct]: {
+    label: 'Llama 3.2 1B Instruct',
+    prefix: 'llama32-1b',
+    category: 'experimental',
+  },
+  [Model.Qwen2_5_1_5B_Instruct]: {
+    label: 'Qwen2.5 1.5B Instruct',
+    prefix: 'qwen25-1.5b',
+    category: 'experimental',
+  },
+  [Model.Gemma_2B_IT]: {
+    label: 'Gemma 2B IT',
+    prefix: 'gemma2b',
+    category: 'experimental',
+  },
+  [Model.Phi3_Mini_4K_Instruct]: {
+    label: 'Phi-3 Mini 4K Instruct',
+    prefix: 'phi3mini',
+    category: 'experimental',
+  },
   [Model.Llama3_1_8B]: {
     label: 'Llama 3.1 8B',
     prefix: 'llama31-8b',

@@ -8,9 +8,14 @@
  */
 export const DB_MODEL_TO_DISPLAY: Record<string, string> = {
   dsr1: 'DeepSeek-R1-0528',
+  gemma2b: 'gemma-2b-it',
   gptoss120b: 'gpt-oss-120b',
   'llama31-8b': 'Llama-3.1-8B',
+  'llama32-1b': 'Llama-3.2-1B-Instruct',
   llama70b: 'Llama-3.3-70B-Instruct-FP8',
+  phi3mini: 'Phi-3-mini-4k-instruct',
+  'qwen25-1.5b': 'Qwen2.5-1.5B-Instruct',
+  'qwen3-0.6b': 'Qwen3-0.6B',
   'qwen3.5': 'Qwen-3.5-397B-A17B',
   // Qwen4-architecture preview, not a Qwen3.5 point release (GatedDeltaNet plus
   // Qwen Sparse Attention, 512 experts), so it gets its own display bucket.
