@@ -1,6 +1,11 @@
 import type { ExclusionConflictPolicy, ExclusionSpec } from './exclusion';
 
 export enum Model {
+  Qwen2_5_0_5B_Instruct = 'Qwen2.5-0.5B-Instruct',
+  Qwen3_Coder_30B_A3B_Instruct = 'Qwen3-Coder-30B-A3B-Instruct',
+  DeepSeek_V2_Lite = 'DeepSeek-V2-Lite',
+  Qwen3_VL_2B_Instruct = 'Qwen3-VL-2B-Instruct',
+  Qwen3_VL_30B_A3B_Instruct = 'Qwen3-VL-30B-A3B-Instruct',
   Qwen3_0_6B = 'Qwen3-0.6B',
   Llama3_2_1B_Instruct = 'Llama-3.2-1B-Instruct',
   Qwen2_5_1_5B_Instruct = 'Qwen2.5-1.5B-Instruct',
@@ -140,6 +145,31 @@ const GUARDED_ENGINE_FAMILIES = ['vllm', 'sglang'] as const;
 // already part of the canonical name (Llama 3.3 70B, gpt-oss 120B) so no
 // duplication needed.
 const MODEL_CONFIG: Record<Model, ModelConfig> = {
+  [Model.Qwen2_5_0_5B_Instruct]: {
+    label: 'Qwen2.5 0.5B Instruct',
+    prefix: 'qwen25-0.5b',
+    category: 'experimental',
+  },
+  [Model.Qwen3_Coder_30B_A3B_Instruct]: {
+    label: 'Qwen3 Coder 30B-A3B Instruct',
+    prefix: 'qwen3coder-30b-a3b',
+    category: 'experimental',
+  },
+  [Model.DeepSeek_V2_Lite]: {
+    label: 'DeepSeek V2 Lite',
+    prefix: 'dsv2lite',
+    category: 'experimental',
+  },
+  [Model.Qwen3_VL_2B_Instruct]: {
+    label: 'Qwen3 VL 2B Instruct',
+    prefix: 'qwen3vl-2b',
+    category: 'experimental',
+  },
+  [Model.Qwen3_VL_30B_A3B_Instruct]: {
+    label: 'Qwen3 VL 30B-A3B Instruct',
+    prefix: 'qwen3vl-30b-a3b',
+    category: 'experimental',
+  },
   [Model.Qwen3_0_6B]: {
     label: 'Qwen3 0.6B',
     prefix: 'qwen3-0.6b',

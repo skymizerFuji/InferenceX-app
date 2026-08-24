@@ -93,7 +93,13 @@ export const MODEL_TO_KEY: Record<string, string> = {
   'amd/Llama-3.3-70B-Instruct-MXFP4-Preview': 'llama70b',
   // Llama-3.1-8B
   'meta-llama/Llama-3.1-8B': 'llama31-8b',
+  'meta-llama/Llama-3.1-8B-Instruct': 'llama31-8b',
   // Small-model cases
+  'Qwen/Qwen2.5-0.5B-Instruct': 'qwen25-0.5b',
+  'Qwen/Qwen3-Coder-30B-A3B-Instruct': 'qwen3coder-30b-a3b',
+  'deepseek-ai/DeepSeek-V2-Lite': 'dsv2lite',
+  'Qwen/Qwen3-VL-2B-Instruct': 'qwen3vl-2b',
+  'Qwen/Qwen3-VL-30B-A3B-Instruct': 'qwen3vl-30b-a3b',
   'Qwen/Qwen3-0.6B': 'qwen3-0.6b',
   'meta-llama/Llama-3.2-1B-Instruct': 'llama32-1b',
   'Qwen/Qwen2.5-1.5B-Instruct': 'qwen25-1.5b',

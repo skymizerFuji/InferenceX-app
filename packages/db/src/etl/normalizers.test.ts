@@ -192,6 +192,14 @@ describe('resolveModelKey', () => {
 
   it('resolves models from HuggingFace paths via MODEL_TO_KEY', () => {
     expect(resolveModelKey({ model: 'meta-llama/Llama-3.1-8B' })).toBe('llama31-8b');
+    expect(resolveModelKey({ model: 'meta-llama/Llama-3.1-8B-Instruct' })).toBe('llama31-8b');
+    expect(resolveModelKey({ model: 'Qwen/Qwen2.5-0.5B-Instruct' })).toBe('qwen25-0.5b');
+    expect(resolveModelKey({ model: 'Qwen/Qwen3-Coder-30B-A3B-Instruct' })).toBe(
+      'qwen3coder-30b-a3b',
+    );
+    expect(resolveModelKey({ model: 'deepseek-ai/DeepSeek-V2-Lite' })).toBe('dsv2lite');
+    expect(resolveModelKey({ model: 'Qwen/Qwen3-VL-2B-Instruct' })).toBe('qwen3vl-2b');
+    expect(resolveModelKey({ model: 'Qwen/Qwen3-VL-30B-A3B-Instruct' })).toBe('qwen3vl-30b-a3b');
     expect(resolveModelKey({ model: 'Qwen/Qwen3-0.6B' })).toBe('qwen3-0.6b');
     expect(resolveModelKey({ model: 'meta-llama/Llama-3.2-1B-Instruct' })).toBe('llama32-1b');
     expect(resolveModelKey({ model: 'Qwen/Qwen2.5-1.5B-Instruct' })).toBe('qwen25-1.5b');
@@ -215,6 +223,12 @@ describe('resolveModelKey', () => {
 
   it('resolves the small-model case identifiers', () => {
     const cases = [
+      ['qwen25-0.5b', 'Qwen/Qwen2.5-0.5B-Instruct'],
+      ['llama31-8b', 'meta-llama/Llama-3.1-8B-Instruct'],
+      ['qwen3coder-30b-a3b', 'Qwen/Qwen3-Coder-30B-A3B-Instruct'],
+      ['dsv2lite', 'deepseek-ai/DeepSeek-V2-Lite'],
+      ['qwen3vl-2b', 'Qwen/Qwen3-VL-2B-Instruct'],
+      ['qwen3vl-30b-a3b', 'Qwen/Qwen3-VL-30B-A3B-Instruct'],
       ['qwen3-0.6b', 'Qwen/Qwen3-0.6B'],
       ['llama32-1b', 'meta-llama/Llama-3.2-1B-Instruct'],
       ['qwen25-1.5b', 'Qwen/Qwen2.5-1.5B-Instruct'],
