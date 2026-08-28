@@ -160,6 +160,7 @@ export const HW_REGISTRY: Record<string, HwEntry> = {
     costh: 1.47,
     costn: 1.56,
     costr: 1.79,
+  },
   // GeForce RTX 5090 (GB202, PCIe Gen5, 32 GB GDDR7). TDP is NVIDIA's
   // reference-card TGP. All-in power and hourly cost tiers are unknown for
   // this user-operated runner, so retain the registry's explicit placeholder.
