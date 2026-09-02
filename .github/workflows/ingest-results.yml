@@ -78,11 +78,6 @@ jobs:
           UNMAPPED_ENTITIES_OUTPUT: ${{ github.workspace }}/unmapped-entities.json
         run: bun run admin:db:ingest:ci --no-ssl
 
-      - name: Apply run overrides
-        env:
-          DATABASE_WRITE_URL: ${{ secrets.DATABASE_WRITE_URL }}
-        run: bun run admin:db:apply-overrides --yes --no-ssl
-
       - name: Verify database
         env:
           DATABASE_WRITE_URL: ${{ secrets.DATABASE_WRITE_URL }}
