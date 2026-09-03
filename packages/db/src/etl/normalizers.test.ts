@@ -31,6 +31,11 @@ describe('hwToGpuKey', () => {
     expect(hwToGpuKey('cluster:h200')).toBe('h200');
   });
 
+  it('maps the MI350 runner-pool shorthand to MI350X', () => {
+    expect(hwToGpuKey('cluster:mi350')).toBe('mi350x');
+    expect(hwToGpuKey('CLUSTER:MI350')).toBe('mi350x');
+  });
+
   it('strips -amds suffix', () => {
     expect(hwToGpuKey('mi355x-amds')).toBe('mi355x');
   });

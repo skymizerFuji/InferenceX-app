@@ -123,6 +123,20 @@ export const HW_REGISTRY: Record<string, HwEntry> = {
     costn: 1.32,
     costr: 1.6,
   },
+  // AMD Instinct MI350X (CDNA 4, air-cooled OAM). AMD specifies a 1000 W
+  // typical board power. Facility power and hourly pricing are not available
+  // in the current TCO model, so retain the registry's explicit placeholders.
+  mi350x: {
+    vendor: 'AMD',
+    arch: 'CDNA 4',
+    label: 'MI350X',
+    sort: 5,
+    tdp: 1000,
+    power: 9.99,
+    costh: 9.99,
+    costn: 9.99,
+    costr: 9.99,
+  },
   mi355x: {
     vendor: 'AMD',
     arch: 'CDNA 4',

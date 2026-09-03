@@ -27,7 +27,9 @@ export function hwToGpuKey(hw: string): string | null {
   // canonical key; that subsumes all the prior explicit suffix strips
   // (-nv, -amds, -dgxc-slurm, -p1, -cw, …).
   const base = hw.toLowerCase().split(':').pop()!.split('-')[0];
-  return GPU_KEYS.has(base) ? base : null;
+  // The MI350X runner pool emits the family shorthand `cluster:mi350`.
+  const canonical = base === 'mi350' ? 'mi350x' : base;
+  return GPU_KEYS.has(canonical) ? canonical : null;
 }
 
 /**
