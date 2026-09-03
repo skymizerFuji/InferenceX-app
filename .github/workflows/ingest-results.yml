@@ -106,24 +106,24 @@ jobs:
             } >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Notify Slack on unmapped entities
-        if: steps.unmapped.outputs.found == 'true'
-        uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
-        with:
-          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
-          webhook-type: incoming-webhook
-          payload: |
-            {
-              "text": ":warning: *Unrecognized entities during ingest*\nRun ID: ${{ steps.artifacts.outputs.source-run-id }}\n```${{ steps.unmapped.outputs.summary }}```\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>"
-            }
+      # - name: Notify Slack on unmapped entities
+      #   if: steps.unmapped.outputs.found == 'true'
+      #   uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
+      #   with:
+      #     webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #     webhook-type: incoming-webhook
+      #     payload: |
+      #       {
+      #         "text": ":warning: *Unrecognized entities during ingest*\nRun ID: ${{ steps.artifacts.outputs.source-run-id }}\n```${{ steps.unmapped.outputs.summary }}```\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>"
+      #       }
 
-      - name: Notify Slack on failure
-        if: failure()
-        uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
-        with:
-          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
-          webhook-type: incoming-webhook
-          payload: |
-            {
-              "text": ":rotating_light: *Ingest results workflow failed*\nRun ID: ${{ steps.artifacts.outputs.source-run-id || github.event.client_payload.source-run-id || github.event.client_payload.run-id }}\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>"
-            }
+      # - name: Notify Slack on failure
+      #   if: failure()
+      #   uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
+      #   with:
+      #     webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #     webhook-type: incoming-webhook
+      #     payload: |
+      #       {
+      #         "text": ":rotating_light: *Ingest results workflow failed*\nRun ID: ${{ steps.artifacts.outputs.source-run-id || github.event.client_payload.source-run-id || github.event.client_payload.run-id }}\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>"
+      #       }
