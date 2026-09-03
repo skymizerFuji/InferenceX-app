@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { extendTailwindMerge } from 'tailwind-merge';
 
 import type { AggDataEntry, InferenceData, RunInfo } from '@/components/inference/types';
+import type { RunConfigRow } from '@/lib/api';
 import { FRAMEWORK_LABELS, USD_TO_CNY } from '@semianalysisai/inferencex-constants';
 
 import { getGpuSpecs } from './constants';
@@ -300,6 +301,9 @@ export function computeOutputCostFields(data: InferenceData[]): InferenceData[] 
  *   provided and non-empty, only entries whose config-key precision segment matches are kept.
  * @param selectedGPUs - Optional list of hwKeys (e.g. ['mi355x_mori-sglang_mtp']). When
  *   provided and non-empty, only entries whose config-key GPU+framework suffix matches are kept.
+ * @param runConfigs - Actual benchmark coverage by run. When provided, this is authoritative for
+ *   model/precision membership so runs without changelog entries still appear without leaking runs
+ *   belonging to other models into the selector.
  * @returns Filtered runs with relevant changelog entries, or null if none match
  */
 export function filterRunsByModel(
@@ -307,6 +311,7 @@ export function filterRunsByModel(
   modelPrefixes: string[],
   selectedPrecisions?: string[],
   selectedGPUs?: string[],
+  runConfigs?: RunConfigRow[],
 ): Record<string, RunInfo> | null {
   if (!availableRuns || modelPrefixes.length === 0) return availableRuns;
 
@@ -345,15 +350,30 @@ export function filterRunsByModel(
     }
   }
 
+  if (runConfigs) {
+    const matchingRunIds = new Set(
+      runConfigs
+        .filter(
+          (config) =>
+            modelPrefixes.includes(config.model) &&
+            (!filterByPrecision || selectedPrecisions!.includes(config.precision)),
+        )
+        .map((config) => String(config.github_run_id)),
+    );
+    const dataDriven: Record<string, RunInfo> = {};
+    for (const [runId, runInfo] of Object.entries(availableRuns)) {
+      if (!matchingRunIds.has(runId)) continue;
+      dataDriven[runId] = filtered[runId] ?? { ...runInfo, changelog: undefined };
+    }
+    return Object.keys(dataDriven).length > 0 ? dataDriven : null;
+  }
+
   if (Object.keys(filtered).length > 0) return filtered;
 
-  // No changelog matches — return all runs without changelogs so the run
-  // selector still renders (e.g. Llama has runs but no changelog entries).
-  const fallback: Record<string, RunInfo> = {};
-  for (const [runId, runInfo] of Object.entries(availableRuns)) {
-    fallback[runId] = { ...runInfo, changelog: undefined };
-  }
-  return Object.keys(fallback).length > 0 ? fallback : null;
+  // Never fall back to every run on the date: those runs can belong to other
+  // models, making the selector's GitHub links misleading for the current
+  // model selection.
+  return null;
 }
 
 /**

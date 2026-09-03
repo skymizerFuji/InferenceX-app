@@ -247,7 +247,7 @@ export function InferenceProvider({
     availabilitySettled,
     availabilityError,
   } = useGlobalFilterAvailability();
-  const { availableRuns, workflowError } = useGlobalFilterWorkflow();
+  const { availableRuns, runConfigs, workflowError } = useGlobalFilterWorkflow();
   const { isUnofficialRun } = useUnofficialRun();
 
   const { getUrlParam, setUrlParams } = useUrlState();
@@ -544,8 +544,15 @@ export function InferenceProvider({
   );
 
   const filteredAvailableRuns = useMemo(
-    () => filterRunsByModel(availableRuns, modelPrefixes, [...effectivePrecisions]) ?? {},
-    [availableRuns, modelPrefixes, effectivePrecisions],
+    () =>
+      filterRunsByModel(
+        availableRuns,
+        modelPrefixes,
+        [...effectivePrecisions],
+        undefined,
+        runConfigs,
+      ) ?? {},
+    [availableRuns, modelPrefixes, effectivePrecisions, runConfigs],
   );
 
   const effectiveSelectedRunId = useMemo(() => {

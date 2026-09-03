@@ -43,7 +43,7 @@ import { inferenceModelForPathname } from '@/lib/inference-model-slug';
 import { computeAutoSwitchDecision } from '@/lib/unofficial-run-auto-switch';
 import { countCurvesByPrecision, resolveEffectivePrecisions } from '@/lib/default-precisions';
 import { resolveEffectiveSequence } from '@/lib/default-sequence';
-import type { AvailabilityRow, WorkflowInfoResponse } from '@/lib/api';
+import type { AvailabilityRow, RunConfigRow, WorkflowInfoResponse } from '@/lib/api';
 const RUNDATE_RE = /^\d{4}-\d{2}-\d{2}$/u;
 const RUNID_RE = /^[A-Za-z0-9_-]{1,64}$/u;
 
@@ -96,6 +96,7 @@ export interface GlobalFilterAvailabilityContextType {
 
 export interface GlobalFilterWorkflowContextType {
   availableRuns: Record<string, RunInfo>;
+  runConfigs: RunConfigRow[];
   workflowLoading: boolean;
   workflowError: string | null;
 }
@@ -681,8 +682,13 @@ export function GlobalFilterProvider({
   );
 
   const workflowValue = useMemo<GlobalFilterWorkflowContextType>(
-    () => ({ availableRuns, workflowLoading, workflowError }),
-    [availableRuns, workflowLoading, workflowError],
+    () => ({
+      availableRuns,
+      runConfigs: workflowData?.runConfigs ?? [],
+      workflowLoading,
+      workflowError,
+    }),
+    [availableRuns, workflowData?.runConfigs, workflowLoading, workflowError],
   );
 
   return (

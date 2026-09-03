@@ -518,6 +518,7 @@ export function createMockGlobalFilterContexts(
     },
     workflow: {
       availableRuns: values.availableRuns,
+      runConfigs: [],
       workflowLoading: values.workflowLoading,
       workflowError: values.workflowError,
     },
