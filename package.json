@@ -40,6 +40,7 @@
     "admin:db:prepare:ci": "bun run --cwd packages/db db:prepare:ci",
     "admin:db:ingest:gcs": "bun run --cwd packages/db db:ingest:gcs",
     "admin:db:ingest:supplemental": "bun run --cwd packages/db db:ingest:supplemental",
+    "admin:db:dispatch-ingest": "bun run --cwd packages/db db:dispatch-ingest",
     "admin:db:migrate": "bun run --cwd packages/db db:migrate",
     "admin:db:migrate:collectivex": "bun run --cwd packages/db db:migrate:collectivex",
     "admin:db:apply-overrides": "bun run --cwd packages/db db:apply-overrides",

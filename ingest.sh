@@ -1,0 +1,1 @@
+bun run admin:db:dispatch-ingest 5090

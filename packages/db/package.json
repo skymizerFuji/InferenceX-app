@@ -19,6 +19,7 @@
     "db:ingest:run": "bun --env-file=../../.env src/ingest-ci-run.ts --download",
     "db:ingest:gcs": "bun --env-file=../../.env src/ingest-gcs-backup.ts",
     "db:ingest:supplemental": "bun --env-file=../../.env src/ingest-supplemental.ts",
+    "db:dispatch-ingest": "bun src/dispatch-ingest-runs.ts",
     "db:migrate": "bun --env-file=../../.env src/migrate.ts",
     "db:migrate:collectivex": "bun --env-file=../../.env src/migrate-collectivex.ts",
     "db:apply-overrides": "bun --env-file=../../.env src/apply-overrides.ts",
