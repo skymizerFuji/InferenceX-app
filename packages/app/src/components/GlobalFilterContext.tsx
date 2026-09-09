@@ -220,7 +220,7 @@ export function GlobalFilterProvider({
   // Per-model routes (/historical/<slug>) imply a model at first render so the
   // server response and hydration already show the routed model — no client
   // effect flicker. An explicit `initialModel` prop (calculator URL seed) wins.
-  const [selectedModel, setSelectedModel] = useState<Model>(
+  const [requestedModel, setSelectedModel] = useState<Model>(
     () => initialModel ?? routeModelForPathname(pathname) ?? Model.DeepSeek_V4_Pro,
   );
 
@@ -386,17 +386,6 @@ export function GlobalFilterProvider({
   const availabilityError = availabilityQueryError ? availabilityQueryError.message : null;
   const { availableModelsAndSequences: unofficialAvailable } = useUnofficialRun();
 
-  const dbModelKeys = useMemo<string[]>(
-    () => DISPLAY_MODEL_TO_DB[selectedModel] ?? [selectedModel],
-    [selectedModel],
-  );
-
-  // Pre-filter availability rows by model once
-  const modelRows = useMemo(
-    () => availabilityRows?.filter((r) => dbModelKeys.includes(r.model)) ?? [],
-    [availabilityRows, dbModelKeys],
-  );
-
   // Models that have any data (DB ∪ unofficial run)
   const availableModels = useMemo(() => {
     if (!availabilityRows) return MODEL_OPTIONS;
@@ -407,6 +396,35 @@ export function GlobalFilterProvider({
       return availabilityRows.some((r) => keys.includes(r.model));
     });
   }, [availabilityRows, unofficialAvailable]);
+
+  // Keep the product default as the requested model, but resolve an implicit
+  // bare-dashboard selection synchronously against the connected database.
+  // This mirrors effectiveSequence/effectivePrecisions: no state-writing
+  // effect can race a deliberate dropdown pick, while URL/route/server seeds
+  // remain authoritative even when their data is temporarily absent.
+  const modelWasExplicit =
+    initialModel !== undefined ||
+    routeModelForPathname(pathname) !== null ||
+    inferenceModelForPathname(pathname) !== null ||
+    hasExplicitUrlParam('g_model');
+  const selectedModel =
+    availabilityRows &&
+    availableModels.length > 0 &&
+    !availableModels.includes(requestedModel) &&
+    !modelWasExplicit
+      ? availableModels[0]
+      : requestedModel;
+
+  const dbModelKeys = useMemo<string[]>(
+    () => DISPLAY_MODEL_TO_DB[selectedModel] ?? [selectedModel],
+    [selectedModel],
+  );
+
+  // Pre-filter availability rows by model once
+  const modelRows = useMemo(
+    () => availabilityRows?.filter((r) => dbModelKeys.includes(r.model)) ?? [],
+    [availabilityRows, dbModelKeys],
+  );
 
   // Auto-switch the selected model when an unofficial run is loaded that
   // doesn't include the currently selected model. Without this, navigating

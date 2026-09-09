@@ -56,6 +56,7 @@ let selectModel: ((model: Model) => void) | undefined;
 let selectionRenders = 0;
 let actionRenders = 0;
 let workflowRenders = 0;
+let selectedModel: Model | undefined;
 const actionSnapshots: GlobalFilterActionsContextType[] = [];
 
 const SelectionProbe = memo(() => {
@@ -83,6 +84,11 @@ const ActionIdentityProbe = memo(() => {
   return null;
 });
 
+const SelectedModelProbe = () => {
+  selectedModel = useGlobalFilterSelection().selectedModel;
+  return null;
+};
+
 function ProviderHarness() {
   const [, setRevision] = useState(0);
   rerenderProvider = () => setRevision((revision) => revision + 1);
@@ -106,6 +112,19 @@ function mountProvider(): void {
   act(() => root?.render(<ProviderHarness />));
 }
 
+function mountFallbackProvider(initialModel?: Model): void {
+  container = document.createElement('div');
+  root = createRoot(container);
+  act(() =>
+    root?.render(
+      <GlobalFilterProvider initialModel={initialModel}>
+        <SelectedModelProbe />
+        <ActionProbe />
+      </GlobalFilterProvider>,
+    ),
+  );
+}
+
 beforeEach(() => {
   mocks.availability.data = [];
   mocks.workflow.data = undefined;
@@ -119,7 +138,53 @@ beforeEach(() => {
   selectionRenders = 0;
   actionRenders = 0;
   workflowRenders = 0;
+  selectedModel = undefined;
   actionSnapshots.length = 0;
+});
+
+describe('GlobalFilterProvider model initialization', () => {
+  const llamaAvailability = {
+    model: 'llama31-8b',
+    isl: 1024,
+    osl: 1024,
+    precision: 'bf16',
+    hardware: 'rtx5090',
+    framework: 'vllm',
+    spec_method: 'none',
+    disagg: false,
+    benchmark_type: 'single_turn',
+    date: '2026-09-01',
+  };
+  const deepSeekLiteAvailability = {
+    ...llamaAvailability,
+    model: 'dsv2lite',
+  };
+
+  it('starts the bare dashboard on the locally available Llama model', () => {
+    mocks.availability.data = [llamaAvailability];
+
+    mountFallbackProvider();
+
+    expect(selectedModel).toBe(Model.Llama3_1_8B);
+  });
+
+  it('keeps a deliberate dropdown selection after resolving the implicit default', () => {
+    mocks.availability.data = [deepSeekLiteAvailability, llamaAvailability];
+    mountFallbackProvider();
+    expect(selectedModel).toBe(Model.DeepSeek_V2_Lite);
+
+    act(() => selectModel?.(Model.Llama3_1_8B));
+
+    expect(selectedModel).toBe(Model.Llama3_1_8B);
+  });
+
+  it('preserves an explicit initial model even when availability does not include it', () => {
+    mocks.availability.data = [llamaAvailability];
+
+    mountFallbackProvider(Model.DeepSeek_V4_Pro);
+
+    expect(selectedModel).toBe(Model.DeepSeek_V4_Pro);
+  });
 });
 
 afterEach(() => {
