@@ -47,9 +47,9 @@ describe('metric compatibility', () => {
     expect(resolveMetricConfigKey('y')).toBe('y_tpPerGpu');
   });
 
-  it('keeps the legacy fallback independent from the dashboard default', () => {
+  it('keeps the legacy fallback on raw throughput', () => {
     expect(resolveMetricConfigKey(undefined, 'y')).toBe('y_tpPerGpu');
-    expect(DEFAULT_METRIC_CONFIG_KEY).toBe('y_tokensPerDollarN');
+    expect(DEFAULT_METRIC_CONFIG_KEY).toBe('y_tpPerGpu');
   });
 
   it('falls back safely for unknown persisted metric values', () => {

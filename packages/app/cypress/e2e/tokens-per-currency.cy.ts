@@ -1,7 +1,7 @@
 /**
- * The dashboard now opens on tokens purchasable per $1 USD, and the same
- * quantities are also available priced in yuan. Fixed-sequence Quick Filters
- * remain available from the chart legend.
+ * Tokens purchasable per $1 USD and the same quantities priced in yuan remain
+ * available alongside the dashboard's throughput default. Fixed-sequence Quick
+ * Filters remain available from the chart legend.
  */
 describe('Tokens per currency and agentic controls', () => {
   beforeEach(() => {
@@ -10,11 +10,11 @@ describe('Tokens per currency and agentic controls', () => {
     });
   });
 
-  it('defaults the y-axis to total tokens per $1 USD', () => {
+  it('defaults the y-axis to token throughput per chip', () => {
     cy.visit('/inference');
     cy.get('[data-testid="yaxis-metric-selector"]').should(
       'contain.text',
-      'Total Tokens per $1 USD (Owning - Neocloud Giant)',
+      'Token Throughput per Chip',
     );
     cy.get('[data-testid="scatter-graph"]')
       .first()
@@ -22,11 +22,11 @@ describe('Tokens per currency and agentic controls', () => {
       .should('have.length.greaterThan', 0);
   });
 
-  it('still honors an explicit ?i_metric=, so shared links are unaffected', () => {
-    cy.visit('/inference?i_metric=y_tpPerGpu');
+  it('still honors an explicit ?i_metric= from shared links', () => {
+    cy.visit('/inference?i_metric=y_tokensPerDollarN');
     cy.get('[data-testid="yaxis-metric-selector"]').should(
       'contain.text',
-      'Token Throughput per Chip',
+      'Total Tokens per $1 USD (Owning - Neocloud Giant)',
     );
   });
 

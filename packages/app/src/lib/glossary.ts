@@ -233,7 +233,7 @@ const entries = [
     significance:
       'Maximum throughput captures only one operating point. A system can lead in tokens per second while operating at interactivity too low for a real-time product. The useful comparison is throughput at a latency or interactivity target appropriate to the workload.',
     benchmarkContext:
-      'On an InferenceX chart, throughput is read together with interactivity across the full concurrency sweep. The Pareto frontier removes operating points that are worse on both axes.',
+      'Token throughput per chip is the default y-axis on InferenceX inference charts. It is read together with interactivity across the full concurrency sweep, and the Pareto frontier removes operating points that are worse on both axes.',
     measurement: { label: 'Typical unit', value: 'tokens/second/chip (tok/s/chip)' },
     relatedTerms: ['interactivity', 'concurrency', 'pareto-frontier', 'iso-interactivity'],
     articleSlugs: [INFERENCEMAX, INFERENCEX_V2, SGLANG_056],
@@ -456,7 +456,7 @@ const entries = [
     significance:
       'Peak chip FLOPS account for only part of serving economics. Memory, networking, software maturity, numerical precision, and achievable utilization all affect the measured output behind the ratio.',
     benchmarkContext:
-      'InferenceX compares perf/$ at matched interactivity and names the TCO inputs used. Ratios should not be carried across different model, sequence-length, precision, or latency regimes. The charts express the same economics as tokens per dollar, which reads in the higher-is-better direction and is the default y-axis.',
+      'InferenceX compares perf/$ at matched interactivity and names the TCO inputs used. Ratios should not be carried across different model, sequence-length, precision, or latency regimes. The charts also express the same economics as tokens per dollar, which reads in the higher-is-better direction.',
     relatedTerms: [
       'cost-per-million-tokens',
       'tokens-per-dollar',
@@ -1184,7 +1184,7 @@ const entries = [
     significance:
       'Cost per million tokens and tokens per dollar rank systems identically, but a metric that rises with better hardware sits the same way up as throughput, so a chart mixing the two no longer inverts halfway down the axis. The absolute value depends entirely on the cost model behind it, so it travels only with its stated basis.',
     benchmarkContext:
-      'Total tokens per $1 USD is the default y-axis on the InferenceX inference charts. Read it against the TCO row shown above the chart, and compare only within one cost basis: owning at hyperscaler rates, owning at neocloud rates, and three year rental produce different numbers for identical silicon.',
+      'Total tokens per $1 USD is available as a y-axis metric on the InferenceX inference charts. Read it against the TCO row shown above the chart, and compare only within one cost basis: owning at hyperscaler rates, owning at neocloud rates, and three year rental produce different numbers for identical silicon.',
     measurement: { label: 'Typical unit', value: 'tokens per $1 USD (tok/$)' },
     relatedTerms: [
       'cost-per-million-tokens',

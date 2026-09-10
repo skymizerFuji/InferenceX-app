@@ -147,7 +147,7 @@ const translations: Readonly<Record<string, GlossaryTranslation>> = {
     significance:
       '最大吞吐量不是完整的性能结论。某个点即使拥有最高 tok/s，也可能因为交互性过低而不适合实时产品；有效比较应在符合业务需求的延迟或交互性目标下进行。',
     benchmarkContext:
-      'InferenceX 将吞吐量与交互性放在完整并发扫描中共同展示，并用 Pareto 前沿剔除两个轴上都更差的运行点。',
+      'InferenceX 推理图表默认以每芯片 token 吞吐量作为 Y 轴，并在完整并发扫描中与交互性共同展示；Pareto 前沿会剔除两个轴上都更差的运行点。',
     measurement: { label: '常用单位', value: 'tok/s/chip' },
   },
   interactivity: {
@@ -292,7 +292,7 @@ const translations: Readonly<Record<string, GlossaryTranslation>> = {
     significance:
       '芯片峰值 FLOPS 不能单独决定服务经济性；内存、网络、软件成熟度、数值精度和实际利用率都会影响最终比值。',
     benchmarkContext:
-      'InferenceX 在匹配交互性时比较 perf/$，并明确使用的 TCO 输入。该比值不能跨模型、序列长度、精度或延迟区间直接套用。图表用每美元 token 数表达同一套经济性，它数值越大越好，也是默认的 Y 轴。',
+      'InferenceX 在匹配交互性时比较 perf/$，并明确使用的 TCO 输入。该比值不能跨模型、序列长度、精度或延迟区间直接套用。图表也提供每美元 token 数，用数值越大越好的方向表达同一套经济性。',
   },
   'total-cost-of-ownership': {
     term: '总体拥有成本',
@@ -749,7 +749,7 @@ const translations: Readonly<Record<string, GlossaryTranslation>> = {
     significance:
       '每百万 token 成本与每美元 token 数对系统的排序完全一致，但后者随硬件变好而升高，与吞吐量方向相同，因此同一张图里的坐标轴不会中途反向。该数值完全依赖背后的成本模型，脱离所声明的口径就不成立。',
     benchmarkContext:
-      'InferenceX 推理图表默认的 Y 轴就是每 1 美元可购买的总 token 数。阅读时请对照图表上方的 TCO 行，并只在同一成本口径内比较：自有（超大规模费率）、自有（neocloud 费率）和 3 年租赁对同一颗芯片会给出不同结果。',
+      'InferenceX 推理图表可选择每 1 美元可购买的总 token 数作为 Y 轴。阅读时请对照图表上方的 TCO 行，并只在同一成本口径内比较：自有（超大规模费率）、自有（neocloud 费率）和 3 年租赁对同一颗芯片会给出不同结果。',
     measurement: { label: '常用单位', value: '每 1 美元 token 数（tok/$）' },
   },
   'energy-per-token': {
