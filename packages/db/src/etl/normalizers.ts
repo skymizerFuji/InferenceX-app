@@ -79,6 +79,7 @@ export const MODEL_TO_KEY: Record<string, string> = {
   '/models/DeepSeek-R1': 'dsr1',
   '/models/DeepSeek-R1-0528-MXFP4-Preview': 'dsr1',
   'DeepSeek-R1-0528': 'dsr1',
+  'deepseek-r1': 'dsr1',
   'deepseek-r1-0528': 'dsr1',
   'deepseek-r1-0528-fp4-v2': 'dsr1',
   'deepseek-r1-0528-nvfp4-v2': 'dsr1',
